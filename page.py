@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 import time
 
-
 class Page(Base):
     
     # редактирование поля Name 
@@ -17,12 +16,12 @@ class Page(Base):
         password = self.driver.find_element(By.CSS_SELECTOR, "[type=\"password\"]")
         password.send_keys(what)
 
-    # выбор Milk и Coffee
+    # выбор напитка
     def selectDrink(self, what):
         drink = self.driver.find_element(By.XPATH, f"//form[@id=\"feedbackForm\"]/label[text()=\"{what}\"]")
         drink.click()
     
-    # выбор Yellow
+    # выбор цвета
     def selectColor(self, what):
         st = {
             "Red": "color1",
@@ -33,7 +32,7 @@ class Page(Base):
         }
         self.driver.execute_script(f"document.getElementById('{st[what]}').checked = true")
 
-    # перед тем, как выбрать элемент списка "Do you like automation?", надо проскроллить страницу
+    # проскроллить страничку к списку "Do you like automation?"
     def scrollToAutomation(self):
         automation = self.driver.find_element(By.XPATH, "//select[@name=\"automation\"]")
         self.driver.execute_script("arguments[0].scrollIntoView(true);", automation)
@@ -47,20 +46,19 @@ class Page(Base):
                 break
             pos = tmp_pos
     
-    # выбор Yes
+    # выбор элемента списка "Do you like automation?"
     def selectAutomation(self, what):
         automation = self.driver.find_element(By.XPATH, "//select[@name=\"automation\"]")
         do_you_like = Select(automation)
         do_you_like.select_by_value(what)
-    
 
     # редактирование Email
     def setEmail(self, what):
         email = self.driver.find_element(By.ID, "email")
         email.send_keys(what)
 
-    # редактрование Message
-    # пишу в Message количество элемента списка "Automation tools" и самый длинный
+    # редактирование Message
+    # пишу в Message количество элементов списка "Automation tools" и самый длинный элемент этого же списка
     def setMessage(self):
         options = self.driver.find_element(By.CSS_SELECTOR, "#feedbackForm ul").find_elements(By.TAG_NAME, "li")
         s = str(len(options)) + " " + str(max(options, key=lambda obj: len(obj.text)).text)
@@ -72,7 +70,8 @@ class Page(Base):
         submit_btn = self.driver.find_element(By.ID, "submit-btn")
         submit_btn.click()
 
+    # проверка, что появилась надпись "Message received!"
     def checkMessageAlert(self):
-        self.wait(100).until(EC.alert_is_present())
+        self.wait(5).until(EC.alert_is_present())
         assert self.driver.switch_to.alert.text == "Message received!"
         self.driver.switch_to.alert.accept()

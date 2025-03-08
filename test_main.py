@@ -13,5 +13,4 @@ def test_page(browser):
     main_page.setEmail("example@gmail.com")
     main_page.setMessage()
     main_page.clickButton()
-    
     main_page.checkMessageAlert()

@@ -2,6 +2,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
+# класс реализует в себе необходимые методы для работы с webdriver
 class Base:
     
     def __init__(self, driver):
@@ -22,6 +23,7 @@ class Base:
     def goto_site(self):
         self.driver.implicitly_wait(10)
         self.driver.set_page_load_timeout(2)
+        
         # открываю страницу и не дожидаюсь ее полной загрузки
         try:
             self.driver.get(self.base_url)
