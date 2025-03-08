@@ -32,5 +32,5 @@
 Ожидаемый результат:
 Появился алерт с текстом Message received!
 
-## Реализация
-Использованы Python, Selenium Webdriver, Firefox, PyTest
+## Отчет
+Написан UI-автотест на Python с использованием Selenium Webdriver и PyTest. Работа осуществлялась с Firefox. Использован паттерн проектирования Page Object Model
